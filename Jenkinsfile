@@ -28,7 +28,7 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                            def result = openshift.newBuild("--name=sample-app-jenkins-new", "--image-stream=openjdk18-openshift:1.14-3", "--binary=true")
+                            def result = openshift.newBuild("--name=sample-app-jenkins-new", "--image-stream=openjdk18-openshift:1.14-3", "--binary=true", "--allow-missing-imagestream-tags")
                             echo "BuildConfig creation result: ${result}"
                         }
                     }
@@ -40,7 +40,7 @@ pipeline {
                 sh "rm -rf ocp && mkdir -p ocp/deployments"
                 sh "pwd && ls -la target"
                 sh "cp target/openshiftjenkins-0.0.1-SNAPSHOT.jar ocp/deployments"
-                
+
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
